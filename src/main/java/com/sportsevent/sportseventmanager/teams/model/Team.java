@@ -11,8 +11,7 @@ public class Team {
     private String logo;
     private ArrayList<Integer> players;
 
-    public Team(int id, String name, String sport, String city, String foundationDate, String logo) {
-        this.id = id;
+    public Team(String name, String sport, String city, String foundationDate, String logo) {
         this.name = name;
         this.sport = sport;
         this.city = city;
