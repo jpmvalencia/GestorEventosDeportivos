@@ -1,8 +1,12 @@
 package com.sportsevent.sportseventmanager.teams;
 
 import com.sportsevent.sportseventmanager.common.exception.DuplicateTeamException;
+import com.sportsevent.sportseventmanager.common.pagination.dto.PaginationDTO;
+import com.sportsevent.sportseventmanager.common.response.SuccessResponse;
 import com.sportsevent.sportseventmanager.teams.dto.TeamDTO;
 import com.sportsevent.sportseventmanager.teams.model.Team;
+
+import java.util.List;
 
 public class TeamService {
     private final TeamRepository teamRepository;
@@ -11,7 +15,22 @@ public class TeamService {
         this.teamRepository = teamRepository;
     }
 
-    public Team addTeam(TeamDTO teamDTO) throws DuplicateTeamException {
+    public SuccessResponse getTeams(PaginationDTO paginationDTO) {
+        int page = paginationDTO.getPage();
+        int size = paginationDTO.getSize();
+
+        List<Team> teams = teamRepository.getTeams(page, size);
+        long totalRecords = teamRepository.getTotalRecords();
+
+        return new SuccessResponse(
+                "teams retrieved successfully",
+                200,
+                teams,
+                totalRecords
+        );
+    }
+
+    public SuccessResponse addTeam(TeamDTO teamDTO) throws DuplicateTeamException {
         Team team = new Team(
                 teamDTO.getName(), teamDTO.getSport(), teamDTO.getCity(), teamDTO.getFoundationDate(), teamDTO.getLogo()
         );
@@ -22,6 +41,10 @@ public class TeamService {
 
         teamRepository.addTeam(team);
 
-        return team;
+        return new SuccessResponse(
+                "team created successfully",
+                201,
+                team
+        );
     }
 }

@@ -2,15 +2,25 @@ package com.sportsevent.sportseventmanager.common.response;
 
 import com.sportsevent.sportseventmanager.teams.model.Team;
 
+import java.util.List;
+
 public class SuccessResponse {
     private String message;
     private int status;
-    private Team data;
+    private List<Team> data;
+    private Long totalRecords;
+
+    public SuccessResponse(String message, int status, List<Team> data, Long totalRecords) {
+        this.message = message;
+        this.status = status;
+        this.data = data;
+        this.totalRecords = totalRecords;
+    }
 
     public SuccessResponse(String message, int status, Team data) {
         this.message = message;
         this.status = status;
-        this.data = data;
+        this.data = List.of(data);
     }
 
     public String getMessage() {
@@ -29,11 +39,19 @@ public class SuccessResponse {
         this.status = status;
     }
 
-    public Team getData() {
+    public List<Team> getData() {
         return data;
     }
 
-    public void setData(Team data) {
+    public void setData(List<Team> data) {
         this.data = data;
+    }
+
+    public Long getTotalRecords() {
+        return totalRecords;
+    }
+
+    public void setTotalRecords(Long totalRecords) {
+        this.totalRecords = totalRecords;
     }
 }
