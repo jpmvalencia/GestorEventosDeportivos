@@ -8,10 +8,14 @@ import com.sportsevent.sportseventmanager.common.pagination.dto.PaginationDTO;
 import com.sportsevent.sportseventmanager.common.response.SuccessResponse;
 import com.sportsevent.sportseventmanager.events.dto.AddTeamToEventDTO;
 import com.sportsevent.sportseventmanager.events.dto.EventDTO;
+import com.sportsevent.sportseventmanager.events.dto.EventWithTeamDTO;
 import com.sportsevent.sportseventmanager.events.model.Event;
 import com.sportsevent.sportseventmanager.teams.TeamService;
+import com.sportsevent.sportseventmanager.teams.model.Team;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class EventService {
     EventRepository eventRepository;
@@ -29,10 +33,37 @@ public class EventService {
         List<Event> events = eventRepository.getEvents(page, size);
         long totalRecords = eventRepository.getTotalRecords();
 
+        List<EventWithTeamDTO> eventsWithTeam = events.stream().map(event -> {
+            List<String> teamNames = new ArrayList<>();
+
+            try {
+                for (Integer teamId : event.getParticipatingTeams()) {
+                    Team team = teamService.getTeamById(teamId);
+
+                    if (team != null) {
+                        teamNames.add(team.getName());
+                    }
+                }
+            } catch (TeamNotFoundException _) {
+            }
+
+            return new EventWithTeamDTO(
+                    event.getId(),
+                    event.getName(),
+                    event.getDate(),
+                    event.getLocation(),
+                    event.getSport(),
+                    event.getCapacity(),
+                    event.getTicketsSold(),
+                    event.getStatus(),
+                    teamNames
+            );
+        }).collect(Collectors.toList());
+
         return new SuccessResponse(
                 "events retrieved successfully",
                 200,
-                events,
+                eventsWithTeam,
                 totalRecords
         );
     }
