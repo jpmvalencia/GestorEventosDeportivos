@@ -1,0 +1,14 @@
+package com.sportsevent.sportseventmanager.common.exception;
+
+public class TeamAlreadyAddedException extends Exception {
+    private final int errorCode;
+
+    public TeamAlreadyAddedException(String message, int errorCode) {
+        super(message);
+        this.errorCode = errorCode;
+    }
+
+    public int getErrorCode() {
+        return errorCode;
+    }
+}
