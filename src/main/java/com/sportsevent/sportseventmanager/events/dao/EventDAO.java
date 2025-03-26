@@ -46,6 +46,14 @@ public class EventDAO {
         }
     }
 
+    public void updateStatusEvent(int eventId, String status) {
+        Event event = getEventById(eventId);
+
+        if (event != null) {
+            event.setStatus(status);
+        }
+    }
+
     public boolean existsEventByNameAndSport(String eventName, String sport) {
         for (Event event : events) {
             if (event.getName().equals(eventName) && event.getSport().equals(sport)) {

@@ -71,8 +71,12 @@ public class EventService {
         }
 
         teamService.getTeamById(addTeamToEventDTO.getTeamId());
-        
+
         eventRepository.addTeamToEvent(addTeamToEventDTO.getEventId(), addTeamToEventDTO.getTeamId());
+
+        if (event.getParticipatingTeams().size() >= 2) {
+            eventRepository.updateStatusEvent(addTeamToEventDTO.getEventId(), "En Progreso");
+        }
 
         return new SuccessResponse(
                 "team added to event successfully",

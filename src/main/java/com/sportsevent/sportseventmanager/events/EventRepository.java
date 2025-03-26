@@ -39,4 +39,8 @@ public class EventRepository {
     public void addTeamToEvent(int teamId, int eventId) {
         eventDAO.addTeamToEvent(teamId, eventId);
     }
+
+    public void updateStatusEvent(int eventId, String status) {
+        eventDAO.updateStatusEvent(eventId, status);
+    }
 }
