@@ -21,6 +21,15 @@ public class TeamDAO {
         return teams.subList(fromIndex, toIndex);
     }
 
+    public Team getTeamById(int teamId) {
+        for (Team team : teams) {
+            if (team.getId() == teamId) {
+                return team;
+            }
+        }
+        return null;
+    }
+
     public void addTeam(Team team) {
         team.setId(idCounter++);
         teams.addFirst(team);
@@ -37,5 +46,14 @@ public class TeamDAO {
             }
         }
         return false;
+    }
+
+    public void addPlayerToTeam(int teamId, int playerId) {
+        for (Team team : teams) {
+            if (teamId == team.getId()) {
+                team.addPlayer(playerId);
+                return;
+            }
+        }
     }
 }

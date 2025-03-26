@@ -17,6 +17,7 @@ public class Team {
         this.city = city;
         this.foundationDate = foundationDate;
         this.logo = logo;
+        this.players = new ArrayList<>();
     }
 
     public int getId() {
@@ -73,5 +74,9 @@ public class Team {
 
     public void setPlayers(ArrayList<Integer> players) {
         this.players = players;
+    }
+
+    public void addPlayer(int playerId) {
+        players.add(playerId);
     }
 }
