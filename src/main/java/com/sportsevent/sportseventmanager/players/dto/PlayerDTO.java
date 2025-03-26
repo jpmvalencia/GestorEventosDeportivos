@@ -1,34 +1,25 @@
-package com.sportsevent.sportseventmanager.players.model;
+package com.sportsevent.sportseventmanager.players.dto;
+
+import com.sportsevent.sportseventmanager.common.exception.InvalidDTOException;
+import com.sportsevent.sportseventmanager.common.validation.Validatable;
 
 import java.time.Instant;
 
-public class Player {
-
-    private int id;
+public class PlayerDTO implements Validatable {
     private String firstName;
     private String lastName;
     private Instant birthDate;
     private String nationality;
     private int number;
     private int teamId;
-    private boolean isActive;
 
-    public Player(String firstName, String lastName, Instant birthDate, String nationality, int number, int teamId) {
+    public PlayerDTO(String firstName, String lastName, Instant birthDate, String nationality, int number, int teamId) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
         this.nationality = nationality;
         this.number = number;
         this.teamId = teamId;
-        this.isActive = true;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getFirstName() {
@@ -79,25 +70,43 @@ public class Player {
         this.teamId = teamId;
     }
 
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
-
     @Override
     public String toString() {
-        return "Player{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
+        return "PlayerDTO{" +
+                "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", birthDate=" + birthDate +
                 ", nationality='" + nationality + '\'' +
                 ", number=" + number +
                 ", teamId=" + teamId +
-                ", isActive=" + isActive +
                 '}';
+    }
+
+
+    @Override
+    public void validate() throws InvalidDTOException {
+        if (firstName == null || firstName.trim().isEmpty()) {
+            throw new InvalidDTOException("firstName is required", 400);
+        }
+
+        if (lastName == null || lastName.trim().isEmpty()) {
+            throw new InvalidDTOException("lastName is required", 400);
+        }
+
+        if (birthDate == null) {
+            throw new InvalidDTOException("birthDate is required", 400);
+        }
+
+        if (nationality == null || nationality.trim().isEmpty()) {
+            throw new InvalidDTOException("nationality is required", 400);
+        }
+
+        if (number < 0 || number > 100) {
+            throw new InvalidDTOException("number must be between 0 and 100", 400);
+        }
+
+        if (teamId < 0) {
+            throw new InvalidDTOException("teamId is required", 400);
+        }
     }
 }

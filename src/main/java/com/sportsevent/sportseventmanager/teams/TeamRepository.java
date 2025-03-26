@@ -16,6 +16,10 @@ public class TeamRepository {
         return teamDAO.getTeams(page, size);
     }
 
+    public Team getTeamById(int teamId) {
+        return teamDAO.getTeamById(teamId);
+    }
+
     public void addTeam(Team team) {
         teamDAO.addTeam(team);
     }
@@ -26,5 +30,9 @@ public class TeamRepository {
 
     public boolean existsTeamByNameAndSport(String name, String sport) {
         return teamDAO.existsTeamByNameAndSport(name, sport);
+    }
+
+    public void addPlayerToTeam(int teamId, int playerId) {
+        teamDAO.addPlayerToTeam(teamId, playerId);
     }
 }

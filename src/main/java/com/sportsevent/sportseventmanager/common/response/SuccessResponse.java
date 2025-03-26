@@ -1,23 +1,21 @@
 package com.sportsevent.sportseventmanager.common.response;
 
-import com.sportsevent.sportseventmanager.teams.model.Team;
-
 import java.util.List;
 
-public class SuccessResponse {
+public class SuccessResponse<T> {
     private String message;
     private int status;
-    private List<Team> data;
+    private List<T> data;
     private Long totalRecords;
 
-    public SuccessResponse(String message, int status, List<Team> data, Long totalRecords) {
+    public SuccessResponse(String message, int status, List<T> data, Long totalRecords) {
         this.message = message;
         this.status = status;
         this.data = data;
         this.totalRecords = totalRecords;
     }
 
-    public SuccessResponse(String message, int status, Team data) {
+    public SuccessResponse(String message, int status, T data) {
         this.message = message;
         this.status = status;
         this.data = List.of(data);
@@ -39,11 +37,11 @@ public class SuccessResponse {
         this.status = status;
     }
 
-    public List<Team> getData() {
+    public List<T> getData() {
         return data;
     }
 
-    public void setData(List<Team> data) {
+    public void setData(List<T> data) {
         this.data = data;
     }
 
