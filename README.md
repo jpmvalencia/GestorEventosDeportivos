@@ -1,3 +1,103 @@
+# Sports Event Manager Project Documentation
+
+## Project Structure Overview
+
+The **Sports Event Manager** project is organized in a modular fashion, following a clean architecture to facilitate maintainability and scalability. Below is an overview of the directory structure and its key components.
+
+---
+
+### **1. `src`**
+This is the main source directory that contains all of the project’s code and resources. It’s organized into multiple subdirectories for the core application, configuration, and testing.
+
+#### **`src/main/java`**
+Contains the Java source files, organized by package to separate concerns. The primary packages are:
+
+- **`com.sportsevent.sportseventmanager`**: The root package for the application’s logic.
+  
+  - **`common`**: Contains shared components across the application.
+    - **`adapters`**: This package includes classes that adapt external libraries or frameworks for internal use.
+    - **`exception`**: Handles custom exceptions across the application.
+    - **`pagination`**: Includes pagination utilities and related DTOs for managing large datasets.
+    - **`response`**: Contains standard response formats for the application’s APIs.
+    - **`utils`**: Houses utility classes used throughout the application.
+    - **`validation`**: Contains validation logic for inputs and models.
+  
+  - **`config`**: Contains the application's configuration classes, such as Spring configuration or other frameworks’ configurations.
+  
+  - **`events`**: This module handles all event-related functionality.
+    - **`dao`**: Contains the data access objects (DAOs) for events.
+    - **`dto`**: Defines the data transfer objects (DTOs) for events.
+    - **`model`**: Contains the event models/entities.
+  
+  - **`players`**: This module handles all player-related functionality.
+    - **`dao`**: Contains the data access objects (DAOs) for players.
+    - **`dto`**: Defines the data transfer objects (DTOs) for players.
+    - **`model`**: Contains the player models/entities.
+  
+  - **`teams`**: This module handles all team-related functionality.
+    - **`dao`**: Contains the data access objects (DAOs) for teams.
+    - **`dto`**: Defines the data transfer objects (DTOs) for teams.
+    - **`model`**: Contains the team models/entities.
+
+#### **`src/main/resources`**
+This directory contains various configuration files, such as:
+
+- **`application.properties`**: Contains configuration settings for the application.
+- **`messages.properties`**: Stores externalized strings and messages for internationalization (i18n).
+
+#### **`src/main/webapp`**
+Contains web-related files, including the web application configuration.
+
+- **`WEB-INF`**: Contains web application configuration, including **`web.xml`** or other servlet configurations.
+  
+---
+
+### **2. `src/test`**
+Contains all the test files and related resources.
+
+- **`java`**: Contains the test source files for the application.
+- **`resources`**: Contains test-related resources like configuration files for testing environments.
+
+---
+
+### **3. `target`**
+The target directory is where the build output is placed. This includes compiled classes, resources, and packaged files (like `.jar` or `.war` files). The subdirectories within **`target`** are:
+
+- **`classes`**: Contains the compiled class files, organized in the same structure as the source code.
+- **`generated-sources`**: Contains any automatically generated sources, like annotations or code generation.
+- **`sports-event-manager-1.0-SNAPSHOT`**: The final packaged application, including the compiled classes and resources.
+- **`lib`**: Contains any external libraries or dependencies bundled with the application.
+
+---
+
+### **4. Key Packages and Modules**
+
+#### **`common` module**
+The **`common`** module contains utilities and shared components that are used across the entire project, such as pagination utilities, exception handling, response formatting, and validation.
+
+#### **`events` module**
+This module is responsible for managing events, including defining event data models, their persistence (via DAOs), and the data transfer objects (DTOs) used for communication. It also handles any business logic related to events.
+
+#### **`players` module**
+Similar to the events module, this module handles player data. It includes DAOs for interacting with the database, DTOs for data exchange, and models representing players.
+
+#### **`teams` module**
+The **`teams`** module manages the teams involved in the sports events. It defines team-related models, data access objects, and DTOs.
+
+---
+
+### **5. Configuration and Utilities**
+
+- **`config`**: Centralizes all application-related configurations, ensuring separation of concerns and easier management of application settings.
+  
+- **`pagination`**: Manages pagination logic for large datasets, allowing efficient data retrieval with page-based queries.
+
+- **`validation`**: Ensures that the incoming data is correctly validated before processing, making sure that invalid data does not cause issues during runtime.
+
+- **`exception`**: Defines custom exceptions and error-handling logic across the application, ensuring that proper error messages are returned to the users when necessary.
+
+---
+
 # API Documentation
 
 ## Base URL
