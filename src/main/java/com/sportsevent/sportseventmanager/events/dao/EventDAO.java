@@ -21,6 +21,15 @@ public class EventDAO {
         return events.subList(fromIndex, toIndex);
     }
 
+    public Event getEventById(int eventId) {
+        for (Event event : events) {
+            if (event.getId() == eventId) {
+                return event;
+            }
+        }
+        return null;
+    }
+
     public long getTotalRecords() {
         return events.size();
     }
@@ -30,10 +39,26 @@ public class EventDAO {
         events.add(event);
     }
 
+    public void addTeamToEvent(int eventId, int teamId) {
+        Event event = getEventById(eventId);
+        if (event != null) {
+            event.addParticipatingTeam(teamId);
+        }
+    }
+
     public boolean existsEventByNameAndSport(String eventName, String sport) {
         for (Event event : events) {
             if (event.getName().equals(eventName) && event.getSport().equals(sport)) {
                 return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isTeamAlreadyAddedToEvent(int eventId, int teamId) {
+        for (Event event : events) {
+            if (event.getId() == eventId) {
+                return event.getParticipatingTeams().contains(teamId);
             }
         }
         return false;
