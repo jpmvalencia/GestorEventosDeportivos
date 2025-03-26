@@ -20,6 +20,10 @@ public class PlayerRepository {
         return playerDAO.getPlayers(page, size);
     }
 
+    public Player getPlayerById(int id) {
+        return playerDAO.getPlayerById(id);
+    }
+
     public long getTotalRecords() {
         return playerDAO.getTotalRecords();
     }
