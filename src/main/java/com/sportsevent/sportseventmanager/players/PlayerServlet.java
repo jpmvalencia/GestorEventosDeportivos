@@ -2,6 +2,7 @@ package com.sportsevent.sportseventmanager.players;
 
 import com.google.gson.Gson;
 import com.sportsevent.sportseventmanager.players.dao.PlayerDAO;
+import com.sportsevent.sportseventmanager.common.utils.GsonProvider;
 import com.sportsevent.sportseventmanager.config.ServiceConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -18,6 +19,8 @@ public class PlayerServlet extends HttpServlet {
         PlayerRepository playerRepository = new PlayerRepository(playerDAO);
         playerService = new PlayerService(playerRepository);
         playerService = ServiceConfig.getPlayerService();
+        gson = GsonProvider.createGson();
+    }
 
         gson = new Gson();
     }
