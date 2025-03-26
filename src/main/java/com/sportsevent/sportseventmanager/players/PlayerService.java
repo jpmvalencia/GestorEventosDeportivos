@@ -2,6 +2,7 @@ package com.sportsevent.sportseventmanager.players;
 
 import com.sportsevent.sportseventmanager.common.exception.DuplicatePlayerException;
 import com.sportsevent.sportseventmanager.common.exception.DuplicatePlayerNumberException;
+import com.sportsevent.sportseventmanager.common.exception.PlayerNotFoundException;
 import com.sportsevent.sportseventmanager.common.exception.TeamNotFoundException;
 import com.sportsevent.sportseventmanager.common.pagination.dto.PaginationDTO;
 import com.sportsevent.sportseventmanager.common.response.SuccessResponse;
@@ -60,6 +61,16 @@ public class PlayerService {
                 playersWithTeam,
                 totalRecords
         );
+    }
+
+    public Player getPlayerById(int id) throws PlayerNotFoundException {
+        Player player = playerRepository.getPlayerById(id);
+
+        if (player == null) {
+            throw new PlayerNotFoundException("player with id " + id + " not found", 404);
+        }
+
+        return player;
     }
 
     public SuccessResponse addPlayer(PlayerDTO playerDTO) throws TeamNotFoundException, DuplicatePlayerException, DuplicatePlayerNumberException {

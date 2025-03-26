@@ -16,6 +16,46 @@ public class TeamService {
         this.teamRepository = teamRepository;
     }
 
+    /* public SuccessResponse getTeams(PaginationDTO paginationDTO) {
+        int page = paginationDTO.getPage();
+        int size = paginationDTO.getSize();
+
+        List<Team> teams = teamRepository.getTeams(page, size);
+        long totalRecords = teamRepository.getTotalRecords();
+
+        List<TeamWithPlayerDTO> teamsWithPlayers = teams.stream().map(team -> {
+            List<String> playerNames = new ArrayList<>();
+
+            try {
+                for (Integer playerId : team.getPlayers()) {
+                    Player player = playerService.getPlayerById(playerId);
+
+                    if (player != null) {
+                        playerNames.add(player.getFirstName() + " " + player.getLastName());
+                    }
+                }
+            } catch (PlayerNotFoundException _) {
+            }
+
+            return new TeamWithPlayerDTO(
+                    team.getId(),
+                    team.getName(),
+                    team.getSport(),
+                    team.getCity(),
+                    team.getFoundationDate(),
+                    team.getLogo(),
+                    playerNames
+            );
+        }).collect(Collectors.toList());
+
+        return new SuccessResponse(
+                "teams retrieved successfully",
+                200,
+                teamsWithPlayers,
+                totalRecords
+        );
+    } */
+
     public SuccessResponse getTeams(PaginationDTO paginationDTO) {
         int page = paginationDTO.getPage();
         int size = paginationDTO.getSize();

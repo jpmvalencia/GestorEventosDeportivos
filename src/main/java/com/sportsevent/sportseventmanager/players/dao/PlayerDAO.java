@@ -21,6 +21,15 @@ public class PlayerDAO {
         return players.subList(fromIndex, toIndex);
     }
 
+    public Player getPlayerById(int id) {
+        for (Player player : players) {
+            if (player.getId() == id) {
+                return player;
+            }
+        }
+        return null;
+    }
+
     public void addPlayer(Player player) {
         player.setId(idCounter++);
         players.addFirst(player);
