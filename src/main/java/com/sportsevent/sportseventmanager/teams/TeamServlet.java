@@ -7,7 +7,7 @@ import com.sportsevent.sportseventmanager.common.pagination.dto.PaginationDTO;
 import com.sportsevent.sportseventmanager.common.response.ErrorResponse;
 import com.sportsevent.sportseventmanager.common.response.SuccessResponse;
 import com.sportsevent.sportseventmanager.common.validation.DTOValidator;
-import com.sportsevent.sportseventmanager.teams.dao.TeamDAO;
+import com.sportsevent.sportseventmanager.config.ServiceConfig;
 import com.sportsevent.sportseventmanager.teams.dto.TeamDTO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -24,10 +24,7 @@ public class TeamServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        TeamDAO teamDAO = new TeamDAO();
-        TeamRepository teamRepository = new TeamRepository(teamDAO);
-        teamService = new TeamService(teamRepository);
-
+        teamService = ServiceConfig.getTeamService();
         gson = new Gson();
     }
 
