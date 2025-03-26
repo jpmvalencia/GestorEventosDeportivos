@@ -32,7 +32,7 @@ public class ServiceConfig {
 
         teamService = new TeamService(teamRepository);
         playerService = new PlayerService(playerRepository, teamService);
-        eventService = new EventService(eventRepository);
+        eventService = new EventService(eventRepository, teamService);
     }
 
     public static PlayerService getPlayerService() {
@@ -54,7 +54,7 @@ public class ServiceConfig {
     public static TeamDAO getTeamDAO() {
         return teamDAO;
     }
-    
+
     public static EventDAO getEventDAO() {
         return eventDAO;
     }

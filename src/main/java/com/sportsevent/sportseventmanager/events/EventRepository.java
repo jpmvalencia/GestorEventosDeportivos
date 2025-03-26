@@ -16,6 +16,10 @@ public class EventRepository {
         return eventDAO.getEvents(page, size);
     }
 
+    public Event getEventById(int id) {
+        return eventDAO.getEventById(id);
+    }
+
     public long getTotalRecords() {
         return eventDAO.getTotalRecords();
     }
@@ -24,7 +28,15 @@ public class EventRepository {
         return eventDAO.existsEventByNameAndSport(eventName, sport);
     }
 
+    public boolean isTeamAlreadyAddedToEvent(int eventId, int teamId) {
+        return eventDAO.isTeamAlreadyAddedToEvent(eventId, teamId);
+    }
+
     public void addEvent(Event event) {
         eventDAO.addEvent(event);
+    }
+
+    public void addTeamToEvent(int teamId, int eventId) {
+        eventDAO.addTeamToEvent(teamId, eventId);
     }
 }
