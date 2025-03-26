@@ -14,7 +14,7 @@ public class Event {
     private int ticketsSold;
     private String status;
 
-    public Event(String name, Instant date, String location, String sport, int capacity, int ticketsSold) {
+    public Event(String name, Instant date, String location, String sport, int capacity) {
         this.id = id;
         this.name = name;
         this.date = date;
@@ -22,7 +22,7 @@ public class Event {
         this.sport = sport;
         this.participatingTeams = new ArrayList<>();
         this.capacity = capacity;
-        this.ticketsSold = ticketsSold;
+        this.ticketsSold = 0;
         this.status = "Programado";
     }
 
