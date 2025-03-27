@@ -6,6 +6,7 @@ import com.sportsevent.sportseventmanager.common.response.SuccessResponse;
 import com.sportsevent.sportseventmanager.events.dto.AddTeamToEventDTO;
 import com.sportsevent.sportseventmanager.events.dto.EventDTO;
 import com.sportsevent.sportseventmanager.events.dto.EventWithTeamDTO;
+import com.sportsevent.sportseventmanager.events.dto.SellEventTicketDTO;
 import com.sportsevent.sportseventmanager.events.model.Event;
 import com.sportsevent.sportseventmanager.teams.TeamService;
 import com.sportsevent.sportseventmanager.teams.model.Team;
@@ -128,6 +129,28 @@ public class EventService {
 
         return new SuccessResponse(
                 "event status updated successfully",
+                200,
+                event
+        );
+    }
+
+    public SuccessResponse sellTickets(int eventId, SellEventTicketDTO sellEventTicketDTO) throws EventNotFoundException, InsufficientTicketsException {
+        Event event = eventRepository.getEventById(eventId);
+
+        if (event == null) {
+            throw new EventNotFoundException("event not found", 404);
+        }
+
+        int availableTickets = event.getCapacity() - event.getTicketsSold();
+
+        if (sellEventTicketDTO.getQuantity() > availableTickets) {
+            throw new InsufficientTicketsException("not enough tickets available", 409);
+        }
+
+        eventRepository.updateTicketsSold(eventId, event.getTicketsSold() + sellEventTicketDTO.getQuantity());
+
+        return new SuccessResponse(
+                "tickets sold succesfully",
                 200,
                 event
         );
