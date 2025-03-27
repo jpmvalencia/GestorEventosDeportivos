@@ -43,4 +43,8 @@ public class EventRepository {
     public void updateStatusEvent(int eventId, String status) {
         eventDAO.updateStatusEvent(eventId, status);
     }
+
+    public List<Event> getAllEvents() {
+        return eventDAO.getAllEvents();
+    }
 }

@@ -56,4 +56,8 @@ public class TeamDAO {
             }
         }
     }
+
+    public List<Team> getAllTeams() {
+        return teams;
+    }
 }

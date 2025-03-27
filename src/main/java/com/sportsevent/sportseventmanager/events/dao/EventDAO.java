@@ -71,4 +71,8 @@ public class EventDAO {
         }
         return false;
     }
+
+    public List<Event> getAllEvents() {
+        return events;
+    }
 }

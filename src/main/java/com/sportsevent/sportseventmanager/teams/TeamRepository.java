@@ -35,4 +35,8 @@ public class TeamRepository {
     public void addPlayerToTeam(int teamId, int playerId) {
         teamDAO.addPlayerToTeam(teamId, playerId);
     }
+
+    public List<Team> getAllTeams() {
+        return teamDAO.getAllTeams();
+    }
 }

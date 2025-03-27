@@ -11,7 +11,9 @@ import com.sportsevent.sportseventmanager.teams.TeamService;
 import com.sportsevent.sportseventmanager.teams.model.Team;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class EventService {
@@ -131,5 +133,47 @@ public class EventService {
                 200,
                 event
         );
+    }
+
+    public Map<String, Long> countEventsBySport() {
+        List<Event> events = eventRepository.getAllEvents();
+
+        Map<String, Long> eventCountBySport = events.stream().collect(Collectors.groupingBy(Event::getSport, Collectors.counting()));
+
+        return eventCountBySport;
+    }
+
+    public Map<Integer, Long> getTeamsWithMostEvents() {
+        List<Event> events = eventRepository.getAllEvents();
+
+        Map<Integer, Long> teamEventCount = events.stream().flatMap(event -> event.getParticipatingTeams().stream()).collect(Collectors.groupingBy(teamId -> teamId, Collectors.counting()));
+
+        return teamEventCount.entrySet().stream()
+                .sorted(Map.Entry.<Integer, Long>comparingByValue().reversed())
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (e1, e2) -> e1,
+                        LinkedHashMap::new
+                ));
+    }
+
+    public Map<Integer, Double> getOccupancyPercentages() {
+        List<Event> events = eventRepository.getAllEvents();
+
+        return events.stream().collect(Collectors.toMap(
+                Event::getId,
+                event -> {
+                    int capacity = event.getCapacity();
+                    int ticketsSold = event.getTicketsSold();
+
+                    double occupancyPercentage = 0.0;
+                    if (capacity > 0) {
+                        occupancyPercentage = (double) ticketsSold / capacity * 100;
+                    }
+
+                    return occupancyPercentage;
+                }
+        ));
     }
 }
