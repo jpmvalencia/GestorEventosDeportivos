@@ -44,6 +44,10 @@ public class EventRepository {
         eventDAO.updateStatusEvent(eventId, status);
     }
 
+    public List<Event> getAllEvents() {
+        return eventDAO.getAllEvents();
+    }
+  
     public void updateTicketsSold(int eventId, int ticketsSold) {
         eventDAO.updateTicketsSold(eventId, ticketsSold);
     }

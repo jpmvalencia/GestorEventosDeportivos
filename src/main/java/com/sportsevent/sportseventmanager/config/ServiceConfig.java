@@ -6,6 +6,7 @@ import com.sportsevent.sportseventmanager.events.dao.EventDAO;
 import com.sportsevent.sportseventmanager.players.PlayerRepository;
 import com.sportsevent.sportseventmanager.players.PlayerService;
 import com.sportsevent.sportseventmanager.players.dao.PlayerDAO;
+import com.sportsevent.sportseventmanager.statistics.StatisticService;
 import com.sportsevent.sportseventmanager.teams.TeamRepository;
 import com.sportsevent.sportseventmanager.teams.TeamService;
 import com.sportsevent.sportseventmanager.teams.dao.TeamDAO;
@@ -20,6 +21,7 @@ public class ServiceConfig {
     private static PlayerService playerService;
     private static TeamService teamService;
     private static EventService eventService;
+    private static StatisticService statisticService;
 
     static {
         playerDAO = new PlayerDAO();
@@ -33,6 +35,7 @@ public class ServiceConfig {
         teamService = new TeamService(teamRepository);
         playerService = new PlayerService(playerRepository, teamService);
         eventService = new EventService(eventRepository, teamService);
+        statisticService = new StatisticService(playerService, teamService, eventService);
     }
 
     public static PlayerService getPlayerService() {
@@ -45,6 +48,10 @@ public class ServiceConfig {
 
     public static EventService getEventService() {
         return eventService;
+    }
+
+    public static StatisticService getStatisticService() {
+        return statisticService;
     }
 
     public static PlayerDAO getPlayerDAO() {

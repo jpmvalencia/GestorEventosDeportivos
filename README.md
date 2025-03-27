@@ -428,3 +428,36 @@ The **`teams`** module manages the teams involved in the sports events. It defin
     ]
 }
 ```
+
+--- 
+
+**Endpoint:**  
+`GET /statistics`
+
+#### Response:
+
+```json
+{
+    "message": "Statistics retrieved successfully",
+    "status": 200,
+    "data": [
+        {
+            "averagePlayersPerTeam": 0.0,
+            "eventsBySport": {
+                "Basquetball": 1,
+                "Football": 3
+            },
+            "teamsWithMostEvents": {
+                "1": 3,
+                "2": 1
+            },
+            "occupancyPercentages": {
+                "1": 0.2,
+                "2": 0.0,
+                "3": 0.0,
+                "4": 100.0
+            }
+        }
+    ]
+}
+```

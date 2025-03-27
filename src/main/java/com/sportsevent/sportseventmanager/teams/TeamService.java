@@ -110,4 +110,16 @@ public class TeamService {
 
         return team;
     }
+
+    public double getAveragePlayersPerTeam() {
+        List<Team> teams = teamRepository.getAllTeams();
+
+        if (teams.isEmpty()) {
+            return 0.0;
+        }
+
+        int totalPlayers = teams.stream().mapToInt(team -> team.getPlayers().size()).sum();
+
+        return (double) totalPlayers / teams.size();
+    }
 }
