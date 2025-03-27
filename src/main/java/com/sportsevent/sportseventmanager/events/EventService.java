@@ -1,14 +1,12 @@
 package com.sportsevent.sportseventmanager.events;
 
-import com.sportsevent.sportseventmanager.common.exception.DuplicateEventException;
-import com.sportsevent.sportseventmanager.common.exception.EventNotFoundException;
-import com.sportsevent.sportseventmanager.common.exception.TeamAlreadyAddedException;
-import com.sportsevent.sportseventmanager.common.exception.TeamNotFoundException;
+import com.sportsevent.sportseventmanager.common.exception.*;
 import com.sportsevent.sportseventmanager.common.pagination.dto.PaginationDTO;
 import com.sportsevent.sportseventmanager.common.response.SuccessResponse;
 import com.sportsevent.sportseventmanager.events.dto.AddTeamToEventDTO;
 import com.sportsevent.sportseventmanager.events.dto.EventDTO;
 import com.sportsevent.sportseventmanager.events.dto.EventWithTeamDTO;
+import com.sportsevent.sportseventmanager.events.dto.SellEventTicketDTO;
 import com.sportsevent.sportseventmanager.events.model.Event;
 import com.sportsevent.sportseventmanager.teams.TeamService;
 import com.sportsevent.sportseventmanager.teams.model.Team;
@@ -111,6 +109,48 @@ public class EventService {
 
         return new SuccessResponse(
                 "team added to event successfully",
+                200,
+                event
+        );
+    }
+
+    public SuccessResponse updateEventStatus(int eventId, String status) throws EventNotFoundException, InvalidEventStatusException {
+        Event event = eventRepository.getEventById(eventId);
+
+        if (event == null) {
+            throw new EventNotFoundException("event not found", 404);
+        }
+
+        if ("En Progreso".equals(status) && event.getParticipatingTeams().size() < 2) {
+            throw new InvalidEventStatusException("cannot start the event with less than 2 teams", 400);
+        }
+
+        eventRepository.updateStatusEvent(eventId, status);
+
+        return new SuccessResponse(
+                "event status updated successfully",
+                200,
+                event
+        );
+    }
+
+    public SuccessResponse sellTickets(int eventId, SellEventTicketDTO sellEventTicketDTO) throws EventNotFoundException, InsufficientTicketsException {
+        Event event = eventRepository.getEventById(eventId);
+
+        if (event == null) {
+            throw new EventNotFoundException("event not found", 404);
+        }
+
+        int availableTickets = event.getCapacity() - event.getTicketsSold();
+
+        if (sellEventTicketDTO.getQuantity() > availableTickets) {
+            throw new InsufficientTicketsException("not enough tickets available", 409);
+        }
+
+        eventRepository.updateTicketsSold(eventId, event.getTicketsSold() + sellEventTicketDTO.getQuantity());
+
+        return new SuccessResponse(
+                "tickets sold succesfully",
                 200,
                 event
         );
