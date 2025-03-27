@@ -1,5 +1,8 @@
 # Sports Event Manager Project Documentation
 
+## Summary
+https://drive.google.com/file/d/1_WZFtfGB-8UI1Ndd-yl_O2bFXqdFiJHF/view?usp=sharing
+
 ## Project Structure Overview
 
 The **Sports Event Manager** project is organized in a modular fashion, following a clean architecture to facilitate maintainability and scalability. Below is an overview of the directory structure and its key components.
