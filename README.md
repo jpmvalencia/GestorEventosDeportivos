@@ -39,12 +39,6 @@ Contains the Java source files, organized by package to separate concerns. The p
     - **`dto`**: Defines the data transfer objects (DTOs) for teams.
     - **`model`**: Contains the team models/entities.
 
-#### **`src/main/resources`**
-This directory contains various configuration files, such as:
-
-- **`application.properties`**: Contains configuration settings for the application.
-- **`messages.properties`**: Stores externalized strings and messages for internationalization (i18n).
-
 #### **`src/main/webapp`**
 Contains web-related files, including the web application configuration.
 
@@ -326,7 +320,7 @@ The **`teams`** module manages the teams involved in the sports events. It defin
 
 **Endpoint:**
 
-`POST /events`
+`PUT /events`
 
 **Request Body:**
 
@@ -356,6 +350,80 @@ The **`teams`** module manages the teams involved in the sports events. It defin
             "capacity": 50000,
             "ticketsSold": 0,
             "status": "Programado"
+        }
+    ]
+}
+```
+
+---
+
+### 8. Update Event Status
+
+**Endpoint:**  
+`PUT /events/{eventId}/status`
+
+#### Request Body:
+
+```json
+{
+    "status": "Cancelado"
+}
+```
+
+#### Response:
+
+```json
+{
+    "message": "event status updated successfully",
+    "status": 200,
+    "data": [
+        {
+            "id": 1,
+            "name": "Football Championship",
+            "date": "2025-03-30T14:30:00Z",
+            "location": "Stadium XYZ",
+            "sport": "Football",
+            "participatingTeams": [],
+            "capacity": 50000,
+            "ticketsSold": 0,
+            "status": "Cancelado"
+        }
+    ]
+}
+```
+
+---
+
+### 9. Sell Tickets for Event
+
+**Endpoint:**  
+`PUT /events/{eventId}/sell-ticket`
+
+#### Request Body:
+
+```json
+{
+    "quantity": 1000000
+}
+```
+
+#### Response:
+
+```json
+{
+    "message": "tickets sold successfully",
+    "status": 200,
+    "data": [
+        {
+            "id": 1,
+            "name": "Football Championship",
+            "date": "2025-03-30T14:30:00Z",
+            "location": "Stadium XYZ",
+            "sport": "Football",
+            "participatingTeams": [],
+            "capacity": 50000,
+            "ticketsSold": 100,
+            "status": "Cancelado"
         }
     ]
 }
