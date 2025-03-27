@@ -72,6 +72,10 @@ public class EventDAO {
         return false;
     }
 
+    public List<Event> getAllEvents() {
+        return events;
+    }
+  
     public void updateTicketsSold(int eventId, int ticketsSold) {
         Event event = getEventById(eventId);
 
