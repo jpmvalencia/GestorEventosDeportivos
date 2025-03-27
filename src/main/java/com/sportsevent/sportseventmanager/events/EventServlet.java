@@ -11,6 +11,7 @@ import com.sportsevent.sportseventmanager.config.ServiceConfig;
 import com.sportsevent.sportseventmanager.events.dto.AddTeamToEventDTO;
 import com.sportsevent.sportseventmanager.events.dto.ChangeEventStatusDTO;
 import com.sportsevent.sportseventmanager.events.dto.EventDTO;
+import com.sportsevent.sportseventmanager.events.dto.SellEventTicketDTO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -206,6 +207,56 @@ public class EventServlet extends HttpServlet {
                 resp.setStatus(HttpServletResponse.SC_CONFLICT);
                 resp.setContentType("application/json");
                 resp.getWriter().write(jsonErrorResponse);
+            } catch (Exception e) {
+                ErrorResponse errorResponse = new ErrorResponse(e.getMessage(), 500);
+                String jsonErrorResponse = gson.toJson(errorResponse);
+
+                resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                resp.setContentType("application/json");
+                resp.getWriter().write(jsonErrorResponse);
+            }
+        } else if (pathInfo.matches("/\\d+/sell-ticket")) {
+            String[] pathParts = pathInfo.split("/");
+
+            if (pathParts.length != 3) {
+                ErrorResponse errorResponse = new ErrorResponse("invalid path parameters", 500);
+                String jsonErrorResponse = gson.toJson(errorResponse);
+
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                resp.setContentType("application/json");
+                resp.setCharacterEncoding("UTF-8");
+                resp.getWriter().write(jsonErrorResponse);
+                return;
+            }
+
+            int eventId = Integer.parseInt(pathParts[1]);
+            SellEventTicketDTO sellEventTicketDTO = gson.fromJson(req.getReader(), SellEventTicketDTO.class);
+
+            try {
+                DTOValidator.validate(sellEventTicketDTO);
+
+                SuccessResponse successResponse = eventService.sellTickets(eventId, sellEventTicketDTO);
+
+                resp.setContentType("application/json");
+                resp.setCharacterEncoding("UTF-8");
+                resp.getWriter().write(gson.toJson(successResponse));
+
+            } catch (EventNotFoundException e) {
+                ErrorResponse errorResponse = new ErrorResponse(e.getMessage(), e.getErrorCode());
+                String jsonErrorResponse = gson.toJson(errorResponse);
+
+                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                resp.setContentType("application/json");
+                resp.getWriter().write(jsonErrorResponse);
+
+            } catch (InsufficientTicketsException e) {
+                ErrorResponse errorResponse = new ErrorResponse(e.getMessage(), e.getErrorCode());
+                String jsonErrorResponse = gson.toJson(errorResponse);
+
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                resp.setContentType("application/json");
+                resp.getWriter().write(jsonErrorResponse);
+
             } catch (Exception e) {
                 ErrorResponse errorResponse = new ErrorResponse(e.getMessage(), 500);
                 String jsonErrorResponse = gson.toJson(errorResponse);
